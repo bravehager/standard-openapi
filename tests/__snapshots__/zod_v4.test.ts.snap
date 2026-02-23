@@ -29,6 +29,106 @@ exports[`zod v4 > basic 1`] = `
 }
 `;
 
+exports[`zod v4 > recursive schemas (z.lazy) > recursive schema with union embedded in parent 1`] = `
+{
+  "components": {
+    "schemas": {
+      "Forest": {
+        "properties": {
+          "name": {
+            "type": "string",
+          },
+          "root": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TreeNode",
+              },
+              {
+                "type": "null",
+              },
+            ],
+          },
+        },
+        "required": [
+          "name",
+          "root",
+        ],
+        "type": "object",
+      },
+      "Leaf": {
+        "properties": {
+          "value": {
+            "type": "string",
+          },
+        },
+        "required": [
+          "value",
+        ],
+        "type": "object",
+      },
+      "TreeNode": {
+        "properties": {
+          "children": {
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/Leaf",
+                },
+                {
+                  "$ref": "#/components/schemas/TreeNode",
+                },
+              ],
+            },
+            "type": "array",
+          },
+          "label": {
+            "type": "string",
+          },
+        },
+        "required": [
+          "label",
+          "children",
+        ],
+        "type": "object",
+      },
+    },
+  },
+  "schema": {
+    "$ref": "#/components/schemas/Forest",
+  },
+}
+`;
+
+exports[`zod v4 > recursive schemas (z.lazy) > standalone self-referencing schema 1`] = `
+{
+  "components": {
+    "schemas": {
+      "TreeNode": {
+        "properties": {
+          "children": {
+            "items": {
+              "$ref": "#/components/schemas/TreeNode",
+            },
+            "type": "array",
+          },
+          "value": {
+            "type": "string",
+          },
+        },
+        "required": [
+          "value",
+          "children",
+        ],
+        "type": "object",
+      },
+    },
+  },
+  "schema": {
+    "$ref": "#/components/schemas/TreeNode",
+  },
+}
+`;
+
 exports[`zod v4 > with metadata 1`] = `
 {
   "components": {
